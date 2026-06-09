@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบส่งเสริมการเรียนรู้ออนไลน์ KRUCHAYAPON</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #7C3AED;
+    --blue: #2563EB;
+    --cyan: #0891B2;
+    --teal: #0D9488;
+    --green: #16A34A;
+    --yellow: #D97706;
+    --orange: #EA580C;
+    --pink: #DB2777;
+    --red: #DC2626;
+    --indigo: #4F46E5;
+    --white: #FFFFFF;
+    --bg: #F0F4FF;
+    --card-bg: #FFFFFF;
+    --text: #1E293B;
+    --text-soft: #64748B;
+    --border: #E2E8F0;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --radius: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 40%, #4C1D95 100%);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 2px dashed rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    overflow: hidden;
+    position: relative;
+  }
+  .logo-placeholder:hover { background: rgba(255,255,255,0.25); }
+  .logo-placeholder img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+  .logo-placeholder .upload-hint {
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    line-height: 1.2;
+    pointer-events: none;
+  }
+  .logo-placeholder input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .site-title {
+    font-family: 'Kanit', sans-serif;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .site-subtitle {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.72rem;
+    font-weight: 400;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-teacher, .btn-student {
+    padding: 7px 18px;
+    border-radius: 30px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-teacher {
+    background: linear-gradient(135deg, #F59E0B, #EF4444);
+    color: white;
+  }
+  .btn-teacher:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(239,68,68,0.4); }
+  .btn-student {
+    background: linear-gradient(135deg, #10B981, #3B82F6);
+    color: white;
+  }
+  .btn-student:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
+
+  /* ===== HERO SECTION ===== */
+  .hero {
+    background: linear-gradient(135deg, #312E81 0%, #4338CA 30%, #7C3AED 60%, #DB2777 100%);
+    padding: 3rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 250px; height: 250px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 0.75rem;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero h1 {
+    font-family: 'Kanit', sans-serif;
+    font-size: 2.4rem;
+    color: white;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== STATS BANNER ===== */
+  .stats-banner {
+    background: white;
+    margin: -2rem 2rem 0;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 12px;
+    transition: transform 0.2s;
+  }
+  .stat-item:hover { transform: translateY(-3px); }
+
+  .stat-item:nth-child(1) { background: linear-gradient(135deg, #EFF6FF, #DBEAFE); }
+  .stat-item:nth-child(2) { background: linear-gradient(135deg, #F0FDF4, #DCFCE7); }
+  .stat-item:nth-child(3) { background: linear-gradient(135deg, #FFF7ED, #FFEDD5); }
+  .stat-item:nth-child(4) { background: linear-gradient(135deg, #FDF4FF, #FAE8FF); }
+  .stat-item:nth-child(5) { background: linear-gradient(135deg, #FFF1F2, #FFE4E6); }
+
+  .stat-icon { font-size: 1.5rem; margin-bottom: 4px; }
+  .stat-number {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-item:nth-child(1) .stat-number { color: #2563EB; }
+  .stat-item:nth-child(2) .stat-number { color: #16A34A; }
+  .stat-item:nth-child(3) .stat-number { color: #EA580C; }
+  .stat-item:nth-child(4) .stat-number { color: #9333EA; }
+  .stat-item:nth-child(5) .stat-number { color: #E11D48; }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .stat-live {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: #22C55E;
+    border-radius: 50%;
+    margin-right: 4px;
+    animation: pulse 1.5s infinite;
+    vertical-align: middle;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2rem;
+  }
+
+  .section-title {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, #E2E8F0, transparent);
+    border-radius: 2px;
+  }
+
+  /* ===== MENU GRID ===== */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .menu-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 2px solid transparent;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  }
+
+  .menu-card.c1::before { background: linear-gradient(90deg, #7C3AED, #4F46E5); }
+  .menu-card.c1:hover { border-color: #7C3AED22; }
+  .menu-card.c2::before { background: linear-gradient(90deg, #2563EB, #0891B2); }
+  .menu-card.c2:hover { border-color: #2563EB22; }
+  .menu-card.c3::before { background: linear-gradient(90deg, #0891B2, #0D9488); }
+  .menu-card.c3:hover { border-color: #0891B222; }
+  .menu-card.c4::before { background: linear-gradient(90deg, #16A34A, #0D9488); }
+  .menu-card.c4:hover { border-color: #16A34A22; }
+  .menu-card.c5::before { background: linear-gradient(90deg, #D97706, #EA580C); }
+  .menu-card.c5:hover { border-color: #D9770622; }
+  .menu-card.c6::before { background: linear-gradient(90deg, #EA580C, #DC2626); }
+  .menu-card.c6:hover { border-color: #EA580C22; }
+  .menu-card.c7::before { background: linear-gradient(90deg, #DB2777, #9333EA); }
+  .menu-card.c7:hover { border-color: #DB277722; }
+  .menu-card.c8::before { background: linear-gradient(90deg, #0D9488, #2563EB); }
+  .menu-card.c8:hover { border-color: #0D948822; }
+  .menu-card.c9::before { background: linear-gradient(90deg, #4F46E5, #7C3AED); }
+  .menu-card.c9:hover { border-color: #4F46E522; }
+  .menu-card.c10::before { background: linear-gradient(90deg, #DC2626, #DB2777); }
+  .menu-card.c10:hover { border-color: #DC262622; }
+
+  .menu-icon {
+    font-size: 2.4rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .menu-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .menu-sub {
+    font-size: 0.68rem;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  /* ===== BOTTOM ROW ===== */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .info-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .info-card-title {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ===== ANNOUNCEMENTS ===== */
+  .announce-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .announce-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0.7rem;
+    border-radius: 10px;
+    background: #F8FAFC;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .announce-item:hover { background: #EFF6FF; }
+  .announce-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .announce-text { font-size: 0.82rem; color: var(--text); line-height: 1.5; flex: 1; }
+  .announce-date { font-size: 0.68rem; color: var(--text-soft); white-space: nowrap; }
+
+  /* ===== VISIT CHART ===== */
+  .chart-area {
+    margin-top: 0.5rem;
+  }
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 100px;
+    padding: 0 4px;
+    margin-bottom: 4px;
+  }
+  .chart-bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .chart-bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    min-height: 4px;
+    transition: opacity 0.2s;
+  }
+  .chart-bar:hover { opacity: 0.8; }
+  .chart-day { font-size: 0.6rem; color: var(--text-soft); }
+  .chart-legend {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: var(--text-soft);
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* ===== MONTHLY STATS ===== */
+  .monthly-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .monthly-item {
+    padding: 0.75rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .monthly-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .monthly-lbl { font-size: 0.65rem; color: var(--text-soft); margin-top: 1px; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: linear-gradient(135deg, #1E1B4B, #312E81);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+  }
+  footer strong { color: white; }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 900px) {
+    .menu-grid { grid-template-columns: repeat(3, 1fr); }
+    .stats-banner { grid-template-columns: repeat(3, 1fr); margin: -1.5rem 1rem 0; }
+    .bottom-row { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+    .stats-banner { padding: 1rem; }
+  }
+  @media (max-width: 600px) {
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-banner { grid-template-columns: repeat(2, 1fr); margin: -1rem 0.75rem 0; }
+    .topbar { padding: 0 1rem; }
+    .topbar .site-title { font-size: 0.9rem; }
+    .hero { padding: 2rem 1rem 3rem; }
+    .hero h1 { font-size: 1.4rem; }
+    .main-content { padding: 2.5rem 1rem 1rem; }
+    .monthly-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="logo-area">
+    <div class="logo-placeholder" id="logoBox" title="คลิกเพื่ออัปโหลดโลโก้">
+      <input type="file" accept="image/*" id="logoInput" onchange="handleLogo(event)">
+      <div class="upload-hint" id="uploadHint">📷<br>โลโก้</div>
+    </div>
+    <div>
+      <div class="site-title">KRUCHAYAPON</div>
+      <div class="site-subtitle">ระบบส่งเสริมการเรียนรู้ออนไลน์</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-teacher" onclick="alert('เข้าสู่ระบบสำหรับครู')">👨‍🏫 ครู</button>
+    <button class="btn-student" onclick="alert('เข้าสู่ระบบสำหรับผู้เรียน')">🎒 ผู้เรียน</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✨ ยินดีต้อนรับสู่ระบบการเรียนรู้ออนไลน์</div>
+  <h1>ระบบส่งเสริมการเรียนรู้<br>ออนไลน์ KRUCHAYAPON</h1>
+  <p>เรียนรู้ได้ทุกที่ ทุกเวลา พร้อมสื่อและแบบทดสอบครบครัน</p>
+</section>
+
+<!-- STATS BANNER -->
+<div class="stats-banner" id="statsBanner">
+  <div class="stat-item">
+    <div class="stat-icon">👁️</div>
+    <div class="stat-number" id="totalViews">0</div>
+    <div class="stat-label">ผู้เข้าชมทั้งหมด</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-icon">📅</div>
+    <div class="stat-number" id="todayViews">0</div>
+    <div class="stat-label"><span class="stat-live"></span>วันนี้</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-icon">📆</div>
+    <div class="stat-number" id="monthViews">0</div>
+    <div class="stat-label">เดือนนี้</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-icon">🎓</div>
+    <div class="stat-number" id="studentCount">0</div>
+    <div class="stat-label">ผู้เรียนทั้งหมด</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-icon">📚</div>
+    <div class="stat-number" id="courseCount">0</div>
+    <div class="stat-label">วิชาเรียน</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+  <!-- MENU GRID -->
+  <div class="section-title">📌 เมนูหลัก</div>
+  <div class="menu-grid">
+    <a href="#" class="menu-card c1">
+      <span class="menu-icon">📣</span>
+      <div class="menu-label">ประกาศ</div>
+      <div class="menu-sub">ข่าวสาร & ประชาสัมพันธ์</div>
+    </a>
+    <a href="#" class="menu-card c2">
+      <span class="menu-icon">👩‍🎓</span>
+      <div class="menu-label">ผู้เรียน</div>
+      <div class="menu-sub">ข้อมูลนักเรียน</div>
+    </a>
+    <a href="#" class="menu-card c3">
+      <span class="menu-icon">🗓️</span>
+      <div class="menu-label">ตารางเรียน</div>
+      <div class="menu-sub">ตารางเรียนรายวิชา</div>
+    </a>
+    <a href="#" class="menu-card c4">
+      <span class="menu-icon">📖</span>
+      <div class="menu-label">วิชา</div>
+      <div class="menu-sub">รายวิชาทั้งหมด</div>
+    </a>
+    <a href="#" class="menu-card c5">
+      <span class="menu-icon">🎬</span>
+      <div class="menu-label">สื่อการเรียนรู้</div>
+      <div class="menu-sub">วิดีโอ & เอกสาร</div>
+    </a>
+    <a href="#" class="menu-card c6">
+      <span class="menu-icon">📝</span>
+      <div class="menu-label">แบบทดสอบ</div>
+      <div class="menu-sub">ทดสอบความรู้</div>
+    </a>
+    <a href="#" class="menu-card c7">
+      <span class="menu-icon">📊</span>
+      <div class="menu-label">ผลการเรียน</div>
+      <div class="menu-sub">คะแนน & ผลสัมฤทธิ์</div>
+    </a>
+    <a href="#" class="menu-card c8">
+      <span class="menu-icon">🌟</span>
+      <div class="menu-label">กพช.</div>
+      <div class="menu-sub">กิจกรรมพัฒนาคุณภาพ</div>
+    </a>
+    <a href="#" class="menu-card c9">
+      <span class="menu-icon">🌐</span>
+      <div class="menu-label">แหล่งเรียนรู้</div>
+      <div class="menu-sub">แหล่งความรู้ออนไลน์</div>
+    </a>
+    <a href="#" class="menu-card c10">
+      <span class="menu-icon">📋</span>
+      <div class="menu-label">แบบสำรวจ</div>
+      <div class="menu-sub">ความต้องการ & ปัญหา</div>
+    </a>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-row">
+
+    <!-- ANNOUNCEMENTS -->
+    <div class="info-card">
+      <div class="info-card-title">📣 <span>ประกาศล่าสุด</span></div>
+      <div class="announce-list" id="announceList">
+        <div class="announce-item">
+          <div class="announce-dot" style="background:#7C3AED"></div>
+          <div style="flex:1">
+            <div class="announce-text">เปิดภาคเรียนใหม่ พร้อมระบบการเรียนรู้ออนไลน์</div>
+            <div class="announce-date">9 มิ.ย. 2568</div>
+          </div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot" style="background:#2563EB"></div>
+          <div style="flex:1">
+            <div class="announce-text">กำหนดการส่งงาน/ชิ้นงานรายวิชา</div>
+            <div class="announce-date">8 มิ.ย. 2568</div>
+          </div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot" style="background:#16A34A"></div>
+          <div style="flex:1">
+            <div class="announce-text">แจ้งกำหนดการสอบปลายภาค</div>
+            <div class="announce-date">5 มิ.ย. 2568</div>
+          </div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot" style="background:#EA580C"></div>
+          <div style="flex:1">
+            <div class="announce-text">เพิ่มสื่อการเรียนรู้ใหม่ หมวดวิทยาศาสตร์</div>
+            <div class="announce-date">2 มิ.ย. 2568</div>
+          </div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot" style="background:#DB2777"></div>
+          <div style="flex:1">
+            <div class="announce-text">กิจกรรม กพช. ประจำภาคเรียน</div>
+            <div class="announce-date">1 มิ.ย. 2568</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISIT STATS CARD -->
+    <div class="info-card">
+      <div class="info-card-title">📈 <span>สถิติการเข้าชม 7 วันย้อนหลัง</span></div>
+
+      <div class="monthly-grid">
+        <div class="monthly-item" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE)">
+          <div class="monthly-num" style="color:#2563EB" id="weekTotal">-</div>
+          <div class="monthly-lbl">สัปดาห์นี้</div>
+        </div>
+        <div class="monthly-item" style="background:linear-gradient(135deg,#F0FDF4,#DCFCE7)">
+          <div class="monthly-num" style="color:#16A34A" id="avgDay">-</div>
+          <div class="monthly-lbl">เฉลี่ย/วัน</div>
+        </div>
+        <div class="monthly-item" style="background:linear-gradient(135deg,#FDF4FF,#FAE8FF)">
+          <div class="monthly-num" style="color:#9333EA" id="peakDay">-</div>
+          <div class="monthly-lbl">สูงสุด/วัน</div>
+        </div>
+      </div>
+
+      <div class="chart-area">
+        <div class="chart-bars" id="chartBars"></div>
+        <div class="chart-legend">
+          <span><span class="legend-dot" style="background:linear-gradient(135deg,#7C3AED,#2563EB)"></span>จำนวนผู้เข้าชม</span>
+          <span id="chartDateRange" style="margin-left:auto; font-size:0.65rem; color:#94A3B8"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <strong>ระบบส่งเสริมการเรียนรู้ออนไลน์ KRUCHAYAPON</strong><br>
+  พัฒนาเพื่อการศึกษา · ทุกสิทธิ์สงวนไว้
+</footer>
+
+<script>
+// ===== LOGO UPLOAD =====
+function handleLogo(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const box = document.getElementById('logoBox');
+    document.getElementById('uploadHint').style.display = 'none';
+    let img = box.querySelector('img');
+    if (!img) { img = document.createElement('img'); box.appendChild(img); }
+    img.src = ev.target.result;
+    try { localStorage.setItem('kc_logo', ev.target.result); } catch(e){}
+  };
+  reader.readAsDataURL(file);
+}
+
+// Restore logo
+try {
+  const saved = localStorage.getItem('kc_logo');
+  if (saved) {
+    const box = document.getElementById('logoBox');
+    document.getElementById('uploadHint').style.display = 'none';
+    const img = document.createElement('img');
+    img.src = saved;
+    box.appendChild(img);
+  }
+} catch(e) {}
+
+// ===== STATS COUNTER =====
+// Simulate stats (in real use, connect to Google Sheets or Analytics)
+function animateCount(el, target, duration) {
+  let start = 0;
+  const step = Math.ceil(target / (duration / 16));
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = start.toLocaleString('th-TH');
+    if (start >= target) clearInterval(timer);
+  }, 16);
+}
+
+// Persistent visitor count using localStorage
+let stats = { total: 1240, today: 0, month: 312, students: 87, courses: 10 };
+try {
+  const saved = JSON.parse(localStorage.getItem('kc_stats') || 'null');
+  const today = new Date().toDateString();
+  if (saved) {
+    stats.total = saved.total || 1240;
+    stats.month = saved.month || 312;
+    stats.students = saved.students || 87;
+    // Today counter
+    if (saved.lastDate === today) {
+      stats.today = (saved.today || 0) + 1;
+    } else {
+      stats.today = 1;
+    }
+  } else {
+    stats.today = 1;
+  }
+  localStorage.setItem('kc_stats', JSON.stringify({
+    total: stats.total + 1,
+    today: stats.today,
+    month: stats.month,
+    students: stats.students,
+    lastDate: today
+  }));
+  stats.total = stats.total + 1;
+} catch(e) {}
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    animateCount(document.getElementById('totalViews'), stats.total, 1200);
+    animateCount(document.getElementById('todayViews'), stats.today, 800);
+    animateCount(document.getElementById('monthViews'), stats.month, 1000);
+    animateCount(document.getElementById('studentCount'), stats.students, 900);
+    animateCount(document.getElementById('courseCount'), stats.courses, 600);
+  }, 300);
+});
+
+// ===== WEEKLY CHART =====
+function buildChart() {
+  const bars = document.getElementById('chartBars');
+  bars.innerHTML = '';
+
+  const days = ['จ','อ','พ','พฤ','ศ','ส','อา'];
+  // Simulated weekly data
+  const data = [42, 61, 55, 78, 90, 47, stats.today];
+  const max = Math.max(...data);
+  const colors = [
+    'linear-gradient(180deg,#7C3AED,#4F46E5)',
+    'linear-gradient(180deg,#2563EB,#0891B2)',
+    'linear-gradient(180deg,#0891B2,#0D9488)',
+    'linear-gradient(180deg,#16A34A,#0D9488)',
+    'linear-gradient(180deg,#D97706,#EA580C)',
+    'linear-gradient(180deg,#DB2777,#9333EA)',
+    'linear-gradient(180deg,#DC2626,#DB2777)',
+  ];
+
+  data.forEach((v, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'chart-bar-wrap';
+    const bar = document.createElement('div');
+    bar.className = 'chart-bar';
+    bar.style.height = Math.max(4, Math.round((v / max) * 90)) + 'px';
+    bar.style.background = colors[i];
+    bar.title = `${v} คน`;
+    const label = document.createElement('div');
+    label.className = 'chart-day';
+    label.textContent = days[i];
+    wrap.appendChild(bar);
+    wrap.appendChild(label);
+    bars.appendChild(wrap);
+  });
+
+  const total = data.reduce((a, b) => a + b, 0);
+  const avg = Math.round(total / data.length);
+  const peak = max;
+  document.getElementById('weekTotal').textContent = total.toLocaleString('th-TH');
+  document.getElementById('avgDay').textContent = avg.toLocaleString('th-TH');
+  document.getElementById('peakDay').textContent = peak.toLocaleString('th-TH');
+
+  // Date range label
+  const now = new Date();
+  const startW = new Date(now); startW.setDate(now.getDate() - 6);
+  document.getElementById('chartDateRange').textContent =
+    `${startW.getDate()} – ${now.getDate()} มิ.ย. 2568`;
+}
+buildChart();
+</script>
+
+</body>
+</html>
